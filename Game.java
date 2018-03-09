@@ -61,7 +61,7 @@ public class Game
         pasilloBachiller.setExits(null, escaleras, null, null, null);
         pasilloFP.setExits(null, aula203, aula201, aula202, escaleras);
         aula201.setExits(pasilloFP, null, null, null, null);
-        aula202.setExits(pasilloFP, null, aula203, null, null);
+        aula202.setExits(null, null, aula203, null, null);
         aula203.setExits(null, null, aula202, null, pasilloFP);
 
         currentRoom = escaleras;  // start game outside
