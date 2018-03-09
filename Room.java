@@ -48,7 +48,7 @@ public class Room
         if(south != null)
             southExit = south;
         if(west != null)
-            westExit = west;
+            westExit = west; 
     }
 
     /**

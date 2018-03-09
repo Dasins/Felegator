@@ -25,6 +25,9 @@ public class Game
      */
     public Game() 
     {
+        System.out.println("Estas en las escaleras del segundo piso." +
+        "El timbre ha sonado hace severos minutos" +
+        "y el Felegado esta esperando para apuntarte.\n");
         createRooms();
         parser = new Parser();
     }
@@ -34,23 +37,33 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room pasilloFP, pasilloBachiller, escaleras, aula202, aula203;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        escaleras = new Room("en las escaleras del segundo piso.");
+        
+        pasilloFP = new Room("en el pasillo de FP./n La puerta del aula de examenes esta cerrada." +  
+        "Al otro lado se pueden escuchar los alaridos de cientos de alumnos suspensos durante un examen de redes." +  
+        "/n Se oye bullicio en el aula 203. Las clases ya han comenzado.");
+        
+        pasilloBachiller = new Room("en el pasillo de Bachiller" + 
+        "Las puertas de este pasillo estan cerradas. Hay un grupo de chicas sentadas en el suelo.");
+        
+        aula202 = new Room("en aula de 2º. Parece desierta. /n Una ventana al fondo esta abierta." +  
+        "La cornisa parece conectar con el aula 203.");
+        
+        aula203 = new Room("en el aula 203, el profesor no ha llegado." + 
+        "Los ordenadores estan encendidos y la gente trabajando, absorta en sus pensamientos/n" 
+        + "Una ventana lateral esta abierta y parerce conectar con el aula 202");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        escaleras.setExits(null, pasilloFP, null, pasilloBachiller);
+        pasilloBachiller.setExits(null, null, null, escaleras);
+        pasilloFP.setExits(null, aula203, aula202, escaleras);
+        aula202.setExits(pasilloFP, null, aula203, null);
+        aula203.setExits(null, null, aula202, pasilloFP);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = escaleras;  // start game outside
     }
 
     /**
@@ -77,11 +90,11 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Bienvenido al Felegator!");
+        System.out.println("Felegator es un juego de supervivencia muy aburrido!");
+        System.out.println("Escribe 'help' si necesitas ayuda");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
+        System.out.println("Estas " + currentRoom.getDescription());
         System.out.print("Exits: ");
         if(currentRoom.northExit != null) {
             System.out.print("north ");
