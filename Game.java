@@ -25,9 +25,6 @@ public class Game
      */
     public Game() 
     {
-        System.out.println("Estas en las escaleras del segundo piso." +
-        "El timbre ha sonado hace severos minutos" +
-        "y el Felegado esta esperando para apuntarte.\n");
         createRooms();
         parser = new Parser();
     }
@@ -42,14 +39,14 @@ public class Game
         // create the rooms
         escaleras = new Room("en las escaleras del segundo piso.");
         
-        pasilloFP = new Room("en el pasillo de FP./n La puerta del aula de examenes esta cerrada." +  
-        "Al otro lado se pueden escuchar los alaridos de cientos de alumnos suspensos durante un examen de redes." +  
-        "/n Se oye bullicio en el aula 203. Las clases ya han comenzado.");
+        pasilloFP = new Room("en el pasillo de FP.\nLa puerta del aula de examenes esta cerrada.\n" +  
+        "Al otro lado se pueden escuchar los alaridos de cientos de alumnos suspensos." +  
+        "\n Se oye bullicio en el aula 203. Las clases ya han comenzado.");
         
-        pasilloBachiller = new Room("en el pasillo de Bachiller" + 
-        "Las puertas de este pasillo estan cerradas. Hay un grupo de chicas sentadas en el suelo.");
+        pasilloBachiller = new Room("en el pasillo de Bachiller " + 
+        "Las puertas de este pasillo estan cerradas.\nHay un grupo de chicas sentadas en el suelo.");
         
-        aula202 = new Room("en aula de 2º. Parece desierta. /n Una ventana al fondo esta abierta." +  
+        aula202 = new Room("en aula de 2º. Parece desierta.\n Una ventana al fondo esta abierta." +  
         "La cornisa parece conectar con el aula 203.");
         
         aula203 = new Room("en el aula 203, el profesor no ha llegado." + 
@@ -58,14 +55,36 @@ public class Game
         
         // initialise room exits
         escaleras.setExits(null, pasilloFP, null, pasilloBachiller);
-        pasilloBachiller.setExits(null, null, null, escaleras);
+        pasilloBachiller.setExits(null, escaleras, null, null);
         pasilloFP.setExits(null, aula203, aula202, escaleras);
         aula202.setExits(pasilloFP, null, aula203, null);
         aula203.setExits(null, null, aula202, pasilloFP);
 
         currentRoom = escaleras;  // start game outside
     }
-
+    
+    /**
+     * Muestra por terminal la informacion de la sala actual.
+     */
+    private void printLocationInfo(){
+        System.out.println();
+        System.out.println("Estas " + currentRoom.getDescription());
+        System.out.print("Exits: ");
+        if(currentRoom.northExit != null) {
+            System.out.print("north ");
+        }
+        if(currentRoom.eastExit != null) {
+            System.out.print("east ");
+        }
+        if(currentRoom.southExit != null) {
+            System.out.print("south ");
+        }
+        if(currentRoom.westExit != null) {
+            System.out.print("west ");
+        }
+        System.out.println();
+    }
+    
     /**
      *  Main play routine.  Loops until end of play.
      */
@@ -90,25 +109,14 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Bienvenido al Felegator!");
-        System.out.println("Felegator es un juego de supervivencia muy aburrido!");
-        System.out.println("Escribe 'help' si necesitas ayuda");
+        System.out.println("Bienvenido al Felegator");
+        System.out.println("Un juego basado en hechos reales");
+        System.out.println("El timbre ha sonado hace severos minutos y el Felegado esta esperando para apuntarte.");
         System.out.println();
-        System.out.println("Estas " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
+        System.out.println("Escribe 'help' si necesitas ayuda.");
         System.out.println();
+        printLocationInfo();
+        
     }
 
     /**
@@ -189,21 +197,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
-            System.out.print("Exits: ");
-            if(currentRoom.northExit != null) {
-                System.out.print("north ");
-            }
-            if(currentRoom.eastExit != null) {
-                System.out.print("east ");
-            }
-            if(currentRoom.southExit != null) {
-                System.out.print("south ");
-            }
-            if(currentRoom.westExit != null) {
-                System.out.print("west ");
-            }
-            System.out.println();
+            printLocationInfo();
         }
     }
 
