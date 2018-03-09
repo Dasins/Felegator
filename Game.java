@@ -34,7 +34,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room pasilloFP, pasilloBachiller, escaleras, aula202, aula203;
+        Room pasilloFP, pasilloBachiller, escaleras, aula202, aula201, aula203;
       
         // create the rooms
         escaleras = new Room("en las escaleras del segundo piso.");
@@ -46,6 +46,9 @@ public class Game
         pasilloBachiller = new Room("en el pasillo de Bachiller " + 
         "Las puertas de este pasillo estan cerradas.\nHay un grupo de chicas sentadas en el suelo.");
         
+        aula201 = new Room("en aula de examenes. \n Un esqueleto aun continua realizando un examen" +  
+        "La cornisa parece conectar con el aula 203.");
+        
         aula202 = new Room("en aula de 2º. Parece desierta.\n Una ventana al fondo esta abierta." +  
         "La cornisa parece conectar con el aula 203.");
         
@@ -54,11 +57,12 @@ public class Game
         + "Una ventana lateral esta abierta y parerce conectar con el aula 202");
         
         // initialise room exits
-        escaleras.setExits(null, pasilloFP, null, pasilloBachiller);
-        pasilloBachiller.setExits(null, escaleras, null, null);
-        pasilloFP.setExits(null, aula203, aula202, escaleras);
-        aula202.setExits(pasilloFP, null, aula203, null);
-        aula203.setExits(null, null, aula202, pasilloFP);
+        escaleras.setExits(null, pasilloFP, null, null, pasilloBachiller);
+        pasilloBachiller.setExits(null, escaleras, null, null, null);
+        pasilloFP.setExits(null, aula203, aula201, aula202, escaleras);
+        aula201.setExits(pasilloFP, null, null, null, null);
+        aula202.setExits(pasilloFP, null, aula203, null, null);
+        aula203.setExits(null, null, aula202, null, pasilloFP);
 
         currentRoom = escaleras;  // start game outside
     }
@@ -81,6 +85,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+        if(currentRoom.southEastExit != null) {
+            System.out.print("southEast ");
         }
         System.out.println();
     }
@@ -189,6 +196,9 @@ public class Game
             nextRoom = currentRoom.southExit;
         }
         if(direction.equals("west")) {
+            nextRoom = currentRoom.westExit;
+        }
+        if(direction.equals("southWest")) {
             nextRoom = currentRoom.westExit;
         }
 
